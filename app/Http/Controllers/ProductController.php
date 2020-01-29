@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -32,7 +33,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Product $request)
     {
         //
     }
@@ -66,7 +67,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Product $request, $id)
     {
         //
     }
