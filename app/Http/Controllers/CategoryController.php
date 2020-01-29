@@ -2,29 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Category;
-use Illuminate\Http\Request;
+
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        //
+        $items = Category::latest()->paginate(10);
+
+        return view('category.index')->with(['items' => $items]);
+
+
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
-        //
+        return view('category.create');
     }
 
     /**
@@ -33,53 +37,61 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Category $request)
+    public function store(\App\Http\Requests\Category $request)
     {
-        //
+
+
+        return  $item = Category::create([
+
+            'name' => $request->name,
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+        return  view('category.show')->with(['category' => $category ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return  view('category.edit')->with(['category' => $category ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \App\Http\Requests\Category $request
+     * @param Category $category
+     * @return bool
      */
-    public function update(Category $request, $id)
+    public function update(\App\Http\Requests\Category $request, Category $category)
     {
-        //
+        return $category->update([
+            'name' => $request->name
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return bool
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        return  $category->delete();
     }
 }
